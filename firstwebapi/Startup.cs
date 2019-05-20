@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using firstwebapi.Domain.Models;
 using firstwebapi.Domain.Repositories;
 using firstwebapi.Domain.Service;
 using firstwebapi.Domain.Services.Impl;
@@ -39,6 +40,7 @@ namespace firstwebapi
                 options.UseInMemoryDatabase("supermarket-api-in-memery");
             });
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
         }

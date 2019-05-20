@@ -16,6 +16,11 @@ namespace firstwebapi.Persistence.Repositories
 
         }
 
+        public Task AddAsync(Category category)
+        {
+            return _context.Categories.AddAsync(category);
+        }
+
         public async Task<IEnumerable<Category>> ListAsync()
         {
             return await _context.Categories.ToListAsync();

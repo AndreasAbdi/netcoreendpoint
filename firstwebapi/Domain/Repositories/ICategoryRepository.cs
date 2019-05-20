@@ -9,5 +9,7 @@ namespace firstwebapi.Domain.Repositories
     public interface ICategoryRepository
     {
         Task<IEnumerable<Category>> ListAsync();
+        Task AddAsync(Category category);
+
     }
 }

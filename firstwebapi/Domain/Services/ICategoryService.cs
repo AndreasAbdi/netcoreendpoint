@@ -1,4 +1,5 @@
 ﻿using firstwebapi.Domain.Models;
+using firstwebapi.Domain.Services.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace firstwebapi.Domain.Service
     {
         Task<IEnumerable<Category>> ListAsync();
 
+        Task<SaveCategoryResponse> SaveAsync(Category category);
     }
 }

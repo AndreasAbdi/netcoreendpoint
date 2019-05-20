@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using firstwebapi.Domain.Models;
 using firstwebapi.Domain.Service;
+using firstwebapi.Extensions;
+using firstwebapi.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,10 +23,34 @@ namespace firstwebapi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Category>> GetAllAsync()
+        public async Task<IEnumerable<CategoryResource>> GetAllAsync()
         {
             var categories = await _categoryService.ListAsync();
-            return categories;
+
+            var resources = categories
+                .Select(category => new CategoryResource(category.Id, category.Name));
+            return resources;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostAsync([FromBody] SaveCategoryResource resource)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var resourceToSave = new Category();
+            resourceToSave.Name = resource.Name;
+
+            var result = await _categoryService.SaveAsync(resourceToSave);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var categoryResource = new CategoryResource(result.Category.Id, result.Category.Name);
+            return Ok(categoryResource);
+
         }
     }
 }
