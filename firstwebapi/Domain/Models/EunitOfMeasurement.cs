@@ -19,6 +19,9 @@ namespace firstwebapi.Domain.Models
         Gram = 3,
 
         [Description("KG")]
-        Kilogram = 4
+        Kilogram = 4,
+
+        [Description("L")]
+        Liter = 5
     }
 }

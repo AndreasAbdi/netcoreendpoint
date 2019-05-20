@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using firstwebapi.Domain.Models;
 using firstwebapi.Domain.Repositories;
 using firstwebapi.Domain.Service;
+using firstwebapi.Domain.Services;
 using firstwebapi.Domain.Services.Impl;
 using firstwebapi.Persistence.Contexts;
 using firstwebapi.Persistence.Repositories;
@@ -41,7 +42,11 @@ namespace firstwebapi
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+            services.AddScoped<IProductService, ProductService>();
+
             services.AddScoped<ICategoryService, CategoryService>();
         }
 
