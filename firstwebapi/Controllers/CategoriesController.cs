@@ -73,5 +73,22 @@ namespace firstwebapi.Controllers
             var categoryResource = new CategoryResource(result.Category.Id, result.Category.Name);
             return Ok(categoryResource);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync([FromBody] DeleteCategoryResource resource)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var result = await _categoryService.DeleteAsync(resource.Id);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var categoryResource = new CategoryResource(result.Category.Id, result.Category.Name);
+            return Ok(categoryResource);
+        }
     }
 }

@@ -35,5 +35,10 @@ namespace firstwebapi.Persistence.Repositories
         {
             _context.Categories.Update(category);
         }
+
+        public void deleteAsync(Category category)
+        {
+            _context.Categories.Remove(category);
+        }
     }
 }

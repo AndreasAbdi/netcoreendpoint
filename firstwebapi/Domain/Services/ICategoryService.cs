@@ -14,5 +14,7 @@ namespace firstwebapi.Domain.Service
         Task<SaveCategoryResponse> SaveAsync(Category category);
 
         Task<UpdateCategoryResponse> UpdateAsync(int id, Category category);
+
+        Task<DeleteCategoryResponse> DeleteAsync(int id);
     }
 }

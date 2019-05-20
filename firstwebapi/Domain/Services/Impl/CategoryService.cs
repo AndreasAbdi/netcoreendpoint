@@ -20,6 +20,26 @@ namespace firstwebapi.Domain.Services.Impl
             this._unitOfWork = unitOfWork;
         }
 
+        public async Task<DeleteCategoryResponse> DeleteAsync(int id)
+        {
+            try
+            {
+                var existingCategory = await _categoryRepository.FindByIdAsync(id);
+
+                if (existingCategory == null)
+                    return new DeleteCategoryResponse("Category not found.");
+                
+                _categoryRepository.deleteAsync(existingCategory);
+                await _unitOfWork.CompleteAsync();
+
+                return new DeleteCategoryResponse(existingCategory);
+            }
+            catch(Exception exception)
+            {
+                return new DeleteCategoryResponse($"An error occurred when deleting the category: ${exception.Message}");
+            }
+        }
+
         public Task<IEnumerable<Category>> ListAsync()
         {
             return _categoryRepository.ListAsync();
