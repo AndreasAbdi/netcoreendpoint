@@ -22,9 +22,9 @@ namespace firstwebapi.Controllers
 
         //GET: api/users
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<User>> Get()
         {
-            return new string[] { "Value1", "value2" };
+            return users;
         }
 
 
