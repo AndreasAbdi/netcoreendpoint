@@ -11,25 +11,25 @@ namespace firstwebapi.Domain.Services.Impl
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryRepository _categoryRespository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         
         public CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
         {
-            this._categoryRespository = categoryRepository;
+            this._categoryRepository = categoryRepository;
             this._unitOfWork = unitOfWork;
         }
 
         public Task<IEnumerable<Category>> ListAsync()
         {
-            return _categoryRespository.ListAsync();
+            return _categoryRepository.ListAsync();
         }
 
         public async Task<SaveCategoryResponse> SaveAsync(Category category)
         {
             try
             {
-                await _categoryRespository.AddAsync(category);
+                await _categoryRepository.AddAsync(category);
                 await _unitOfWork.CompleteAsync();
 
                 return new SaveCategoryResponse(category);
@@ -37,6 +37,28 @@ namespace firstwebapi.Domain.Services.Impl
             catch(Exception ex)
             {
                 return new SaveCategoryResponse($"An error occurred when saving the category: ${ex.Message}");
+            }
+        }
+
+        public async Task<UpdateCategoryResponse> UpdateAsync(int id, Category category)
+        {
+
+            var existingCategory = await _categoryRepository.FindByIdAsync(id);
+
+            if (existingCategory == null)
+                return new UpdateCategoryResponse("Category not found.");
+            existingCategory.Name = category.Name;
+
+            try
+            {
+                _categoryRepository.Update(existingCategory);
+                await _unitOfWork.CompleteAsync();
+
+                return new UpdateCategoryResponse(category);
+            }
+            catch(Exception exception)
+            {
+                return new UpdateCategoryResponse($"An error occurred when updating the category: ${exception.Message}");
             }
         }
     }

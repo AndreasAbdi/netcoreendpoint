@@ -12,5 +12,7 @@ namespace firstwebapi.Domain.Service
         Task<IEnumerable<Category>> ListAsync();
 
         Task<SaveCategoryResponse> SaveAsync(Category category);
+
+        Task<UpdateCategoryResponse> UpdateAsync(int id, Category category);
     }
 }

@@ -52,5 +52,26 @@ namespace firstwebapi.Controllers
             return Ok(categoryResource);
 
         }
+
+
+        [HttpPut]
+        public async Task<IActionResult> PutAsync([FromBody] UpdateCategoryResource resource)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var resourceToSave = new Category();
+            resourceToSave.Name = resource.Name;
+
+            var result = await _categoryService.UpdateAsync(resource.Id, resourceToSave);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var categoryResource = new CategoryResource(result.Category.Id, result.Category.Name);
+            return Ok(categoryResource);
+        }
     }
 }

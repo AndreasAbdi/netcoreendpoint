@@ -25,5 +25,15 @@ namespace firstwebapi.Persistence.Repositories
         {
             return await _context.Categories.ToListAsync();
         }
+
+        public async Task<Category> FindByIdAsync(int id)
+        {
+            return await _context.Categories.FindAsync(id);
+        }
+
+        public void Update(Category category)
+        {
+            _context.Categories.Update(category);
+        }
     }
 }
