@@ -74,15 +74,15 @@ namespace firstwebapi.Controllers
             return Ok(categoryResource);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAsync([FromBody] DeleteCategoryResource resource)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            var result = await _categoryService.DeleteAsync(resource.Id);
+            var result = await _categoryService.DeleteAsync(id);
 
             if (!result.Success)
                 return BadRequest(result.Message);
